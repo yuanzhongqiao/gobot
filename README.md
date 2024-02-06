@@ -156,33 +156,7 @@ env GOOS=linux GOARCH=arm GOARM=5 go build -o ./output/my_raspi_bink raspi_blink
     <span class="pl-s1">time</span>.<span class="pl-en">Sleep</span>(<span class="pl-c1">1000</span> <span class="pl-c1">*</span> <span class="pl-s1">time</span>.<span class="pl-c1">Millisecond</span>)
   }
 }</pre><div class="zeroclipboard-container">
-    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="package main
 
-import (
-  &quot;gobot.io/x/gobot/v2/drivers/gpio&quot;
-  &quot;gobot.io/x/gobot/v2/platforms/intel-iot/edison&quot;
-  &quot;time&quot;
-)
-
-func main() {
-  e := edison.NewAdaptor()
-  e.Connect()
-
-  led := gpio.NewLedDriver(e, &quot;13&quot;)
-  led.Start()
-
-  for {
-    led.Toggle()
-    time.Sleep(1000 * time.Millisecond)
-  }
-}" tabindex="0" role="button">
-      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
-    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
-</svg>
-      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
-    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-</svg>
-    </clipboard-copy>
   </div></div>
 <h3 tabindex="-1" dir="auto"><a id="user-content-master-gobot" class="anchor" aria-hidden="true" tabindex="-1" href="#master-gobot"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“大师”戈博特</font></font></h3>
 <p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">您还可以使用该框架（又名“Master Gobot”）的全部功能来控制机器人群或其他功能，例如内置 API 服务器。例如：</font></font></p>
@@ -246,73 +220,7 @@ func main() {
 
   <span class="pl-s1">master</span>.<span class="pl-en">Start</span>()
 }</pre><div class="zeroclipboard-container">
-    <clipboard-copy aria-label="Copy" class="ClipboardButton btn btn-invisible js-clipboard-copy m-2 p-0 tooltipped-no-delay d-flex flex-justify-center flex-items-center" data-copy-feedback="Copied!" data-tooltip-direction="w" value="package main
 
-import (
-  &quot;fmt&quot;
-  &quot;time&quot;
-
-  &quot;gobot.io/x/gobot/v2&quot;
-  &quot;gobot.io/x/gobot/v2/api&quot;
-  &quot;gobot.io/x/gobot/v2/platforms/sphero&quot;
-)
-
-func NewSwarmBot(port string) *gobot.Robot {
-  spheroAdaptor := sphero.NewAdaptor(port)
-  spheroDriver := sphero.NewSpheroDriver(spheroAdaptor)
-  spheroDriver.SetName(&quot;Sphero&quot; + port)
-
-  work := func() {
-    spheroDriver.Stop()
-
-    spheroDriver.On(sphero.Collision, func(data interface{}) {
-      fmt.Println(&quot;Collision Detected!&quot;)
-    })
-
-    gobot.Every(1*time.Second, func() {
-      spheroDriver.Roll(100, uint16(gobot.Rand(360)))
-    })
-    gobot.Every(3*time.Second, func() {
-      spheroDriver.SetRGB(uint8(gobot.Rand(255)),
-        uint8(gobot.Rand(255)),
-        uint8(gobot.Rand(255)),
-      )
-    })
-  }
-
-  robot := gobot.NewRobot(&quot;sphero&quot;,
-    []gobot.Connection{spheroAdaptor},
-    []gobot.Device{spheroDriver},
-    work,
-  )
-
-  return robot
-}
-
-func main() {
-  master := gobot.NewMaster()
-  api.NewAPI(master).Start()
-
-  spheros := []string{
-    &quot;/dev/rfcomm0&quot;,
-    &quot;/dev/rfcomm1&quot;,
-    &quot;/dev/rfcomm2&quot;,
-    &quot;/dev/rfcomm3&quot;,
-  }
-
-  for _, port := range spheros {
-    master.AddRobot(NewSwarmBot(port))
-  }
-
-  master.Start()
-}" tabindex="0" role="button">
-      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-copy js-clipboard-copy-icon">
-    <path d="M0 6.75C0 5.784.784 5 1.75 5h1.5a.75.75 0 0 1 0 1.5h-1.5a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-1.5a.75.75 0 0 1 1.5 0v1.5A1.75 1.75 0 0 1 9.25 16h-7.5A1.75 1.75 0 0 1 0 14.25Z"></path><path d="M5 1.75C5 .784 5.784 0 6.75 0h7.5C15.216 0 16 .784 16 1.75v7.5A1.75 1.75 0 0 1 14.25 11h-7.5A1.75 1.75 0 0 1 5 9.25Zm1.75-.25a.25.25 0 0 0-.25.25v7.5c0 .138.112.25.25.25h7.5a.25.25 0 0 0 .25-.25v-7.5a.25.25 0 0 0-.25-.25Z"></path>
-</svg>
-      <svg aria-hidden="true" height="16" viewBox="0 0 16 16" version="1.1" width="16" data-view-component="true" class="octicon octicon-check js-clipboard-check-icon color-fg-success d-none">
-    <path d="M13.78 4.22a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06 0L2.22 9.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018L6 10.94l6.72-6.72a.75.75 0 0 1 1.06 0Z"></path>
-</svg>
-    </clipboard-copy>
   </div></div>
 <h2 tabindex="-1" dir="auto"><a id="user-content-hardware-support" class="anchor" aria-hidden="true" tabindex="-1" href="#hardware-support"><svg class="octicon octicon-link" viewBox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path d="m7.775 3.275 1.25-1.25a3.5 3.5 0 1 1 4.95 4.95l-2.5 2.5a3.5 3.5 0 0 1-4.95 0 .751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018 1.998 1.998 0 0 0 2.83 0l2.5-2.5a2.002 2.002 0 0 0-2.83-2.83l-1.25 1.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042Zm-4.69 9.64a1.998 1.998 0 0 0 2.83 0l1.25-1.25a.751.751 0 0 1 1.042.018.751.751 0 0 1 .018 1.042l-1.25 1.25a3.5 3.5 0 1 1-4.95-4.95l2.5-2.5a3.5 3.5 0 0 1 4.95 0 .751.751 0 0 1-.018 1.042.751.751 0 0 1-1.042.018 1.998 1.998 0 0 0-2.83 0l-2.5 2.5a1.998 1.998 0 0 0 0 2.83Z"></path></svg></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">硬件支持</font></font></h2>
 <p dir="auto"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gobot有一个可扩展的系统用于连接硬件设备。目前支持以下机器人和物理计算平台：</font></font></p>
